@@ -16,4 +16,5 @@ v-allo is based mainly on shapely, geopandas and scipy.spatial.Voronoi
 
 
 TODO:
+- add allocation functionality
 - speed up map_polys_to_nodes
