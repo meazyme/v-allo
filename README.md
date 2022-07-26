@@ -8,7 +8,7 @@ In a set of finitely many points in the plane (called seeds, sites, or generator
 
 v-allo creates this diagram for you and allows you to overlay the created voronoi polygons with other shapes in order to find what percentage of each shape is covered by wich node. This can be useful for many applications, e.g. energy demands mapped to network nodes. 
 
-When you just need the diagram, run calc_thiessen_polygons and map_polys_to_nodes.
+When you just need the diagram, run create_voronoi_diagram and map_polys_to_nodes.
 
 For overlaying with other geodata to get distribution keys as described above, run the functions named above and then find_prop_of_area.
 
