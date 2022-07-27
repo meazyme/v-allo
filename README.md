@@ -16,5 +16,6 @@ v-allo is based mainly on shapely, geopandas and scipy.spatial.Voronoi
 
 
 TODO:
-- add allocation functionality
+- test allocation with extra weights
+- allow passing different distance function to voronoi
 - speed up map_polys_to_nodes
