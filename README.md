@@ -1,5 +1,5 @@
 # v-allo
-Allocate regional data (e.g. energy demands) to points (e.g. network nodes) using Voronoi/Thiessen polygons as closeness factor.
+Allocate regional data (e.g. energy demands) to points (e.g. network nodes) using Voronoi polygons as distribution factor.
 
 In a set of finitely many points in the plane (called seeds, sites, or generators), for each seed there is a corresponding region, called a Voronoi cell, consisting of all points of the plane closer to that seed than to any other. When creating these cells for all seeds, you get a Voronoi diagram.
 
