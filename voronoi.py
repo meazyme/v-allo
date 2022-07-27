@@ -13,6 +13,20 @@ from scipy.spatial import Voronoi
 import warnings
 
 
+def allocate(distribution_table, demands, extra_weight=None):
+
+    if extra_weight is not None:
+        distribution_table = distribution_table.multiply(extra_weight, axis='index')
+        distribution_table = distribution_table.divide(distribution_table.sum(axis=0), axis='columns')
+
+    allocated = distribution_table.T.multiply(demands, axis='index').sum(axis=0)
+
+    if not 0.99 < demands.sum()/allocated.sum() < 1.01:
+        warnings.warn('WARNING: Allocation Error!')
+
+    return allocated
+
+
 # --- VORONOI DIAGRAM TOOL --------------------------------------------------------------------------------------------
 
 # helper methods
@@ -83,8 +97,8 @@ def create_voronoi_diagram(nodes_gdf, buffer):
     coordinates = points_to_coordinates(list(nodes_gdf.geometry))
     mirrored_coordinates = mirror_coordinates(coordinates, buffer)
     vor = Voronoi(mirrored_coordinates)
-    print('Creating Thiessen polygons from the diagram...')
-    # turn Thiessen polygons into shapely LineStrings and then Polygons
+    print('Creating Voronoi cells from the diagram...')
+    # turn Voronoi cells into shapely LineStrings and then Polygons
     lines = [LineString(vor.vertices[line]) for line in vor.ridge_vertices if -1 not in line]
     result = [poly for poly in polygonize(lines)]
     polys_gdf = gpd.GeoDataFrame({'geometry': result})
@@ -175,7 +189,7 @@ def show(header, gdf1, gdf2):
 
 
 def check_plausibility(results_df, voro_gdf, nodes_gdf, regions_gdf, intersect_gdf,
-                       region_id, point_id, show_plots=True, common_projection=3035):
+                       region_id, point_id, show_plots=True):
     """Method to combine all plausibility checks"""
     print('Testing results for plausibility...')
     print('Number of nodes:', len(nodes_gdf.index))
@@ -209,7 +223,9 @@ def check_plausibility(results_df, voro_gdf, nodes_gdf, regions_gdf, intersect_g
         random_rs_polys = collections.OrderedDict(sorted(random_rs_polys.items()))
         # print('Node IDs of intersecting polygons:\n', list(random_rs_polys.keys()))
         # print('Sum of their area shares:', sum(random_rs_polys.values()))
-        polys_plot_gdf = voro_gdf.sort_values(point_id)[voro_gdf[point_id].isin(list(random_rs_polys.keys()))]
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            polys_plot_gdf = voro_gdf.sort_values(point_id)[voro_gdf[point_id].isin(list(random_rs_polys.keys()))]
         centroids = [poly.centroid for poly in list(polys_plot_gdf.geometry)]  # get the centroids
         x = [c.x for c in centroids]
         y = [c.y for c in centroids]
