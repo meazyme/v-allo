@@ -4,7 +4,7 @@ Allocate regional data (e.g. energy demands) to points (e.g. network nodes) usin
 In a set of finitely many points in the plane (called seeds, sites, or generators), for each seed there is a corresponding region, called a Voronoi cell, consisting of all points of the plane closer to that seed than to any other. When creating these cells for all seeds, you get a Voronoi diagram.
 
 ![Voronoi_growth_euclidean](https://user-images.githubusercontent.com/88534161/181002526-64645ae0-2f5f-4ab2-8d85-de9eb7d00174.gif)
-(source: Wikepedia.org)
+(source: Wikipedia.org)
 
 v-allo creates this diagram for you and allows you to overlay the created voronoi polygons with other shapes in order to find what percentage of each shape is covered by wich node. This can be useful for many applications, e.g. energy demands mapped to network nodes. 
 
