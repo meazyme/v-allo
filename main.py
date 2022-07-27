@@ -12,7 +12,7 @@ def voronoi_diagram(seeds: gpd.GeoDataFrame, buffer: int, point_id: str, show_pl
     :param seeds: GeoDataFrame with the seeds for the voronoi diagram as geometry column in the shapely Point format.
     :param buffer: A bounding box will be created around the seeds (otherwise the outer cells will be infinite).
         Depending on the CRS used, the appropriate buffer size can vary a lot and should be tested.
-    :param point_id: Column name that includes the IDs of the seeds (each seed should have a unique identifier.)
+    :param point_id: Column name that includes the IDs of the seeds (each seed should have a unique identifier).
     :param show_plots: Allow/Disallow plotting.
     :return: GeoDataFrame with the Voronoi cells as 'geometry' column in the format of shapely Polygons
         and a column containing the seed IDs.
